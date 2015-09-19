@@ -1,4 +1,4 @@
-# Time:  O(n)
+﻿# Time:  O(n)
 # Space: O(h)
 #
 # Given a binary tree, imagine yourself standing on the right side of it, 
@@ -21,7 +21,10 @@ class TreeNode:
         self.left = None
         self.right = None
 
+
+# DFS solution 递归
 class Solution:
+
     # @param root, a tree node
     # @return a list of integers
     def rightSideView(self, root):
@@ -30,12 +33,13 @@ class Solution:
         return result
     
     def rightSideViewDFS(self, node, depth, result):
+
         if not node:
             return
-        
+        # 每层输出 depth > len(result)保证进入时输出，返回时不打印
         if depth > len(result):
             result.append(node.val)
-        
+        # 查询最左侧 所以先左后右
         self.rightSideViewDFS(node.right, depth+1, result)
         self.rightSideViewDFS(node.left, depth+1, result)
 
@@ -53,12 +57,16 @@ class Solution2:
         while current:
             next_level = []
             for i, node in enumerate(current):
+                # 每层压入临时栈中
                 if node.left:
                     next_level.append(node.left)
                 if node.right:
                     next_level.append(node.right)
+
+                # 最左侧输出 下标len(current)-1
                 if i == len(current) - 1:
                     result.append(node.val)
+            # 更新为下一层
             current = next_level
             
         return result

@@ -1,4 +1,4 @@
-# Time:  O(n)
+﻿# Time:  O(n)
 # Space: O(1)
 #
 # Given a binary tree where all the right nodes are either leaf nodes with a sibling 
@@ -67,3 +67,12 @@ class Solution2:
         p.right = parent
         
         return root
+
+if __name__ == "__main__":
+    root = TreeNode(1)
+    root.left = TreeNode(2)
+    root.right = TreeNode(3)
+    root.left.left = TreeNode(4)
+    root.left.right = TreeNode(5)
+    result = Solution().upsideDownBinaryTree(root)
+    print result

@@ -1,4 +1,4 @@
-# Time:  O(n^2)
+﻿# Time:  O(n^2)
 # Space: O(1)
 #
 # Given an array S of n integers, 
@@ -36,3 +36,6 @@ class Solution:
 if __name__ == '__main__':
     result = Solution().threeSumClosest([-1, 2, 1, -4], 1)
     print result
+
+import os
+os.get

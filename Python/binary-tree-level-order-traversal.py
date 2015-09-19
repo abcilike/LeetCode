@@ -1,4 +1,4 @@
-# Time:  O(n)
+﻿# Time:  O(n)
 # Space: O(n)
 #
 # Given a binary tree, return the level order traversal of its nodes' values. 
@@ -26,12 +26,16 @@ class TreeNode:
         self.right = None
 
 class Solution:
+
     # @param root, a tree node
     # @return a list of lists of integers
     def levelOrder(self, root):
+
         if root is None:
             return []
+
         result, current = [], [root]
+
         while current:
             next_level, vals = [], []
             for node in current:
@@ -42,6 +46,7 @@ class Solution:
                     next_level.append(node.right)
             current = next_level
             result.append(vals)
+
         return result
 
 if __name__ == "__main__":

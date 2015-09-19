@@ -1,4 +1,4 @@
-# Time:  O(n)
+﻿# Time:  O(n)
 # Space: O(n)
 #
 # Given a binary tree, return the bottom-up level order traversal of its nodes' values.
@@ -26,14 +26,19 @@ class TreeNode:
         self.right = None
 
 class Solution:
+
     # @param root, a tree node
     # @return a list of lists of integers
     def levelOrderBottom(self, root):
+        # 根节点 
         if root is None:
             return []
+
         result, current = [], [root]
+
         while current:
             next_level, vals = [], []
+
             for node in current:
                 vals.append(node.val)
                 if node.left:
@@ -41,7 +46,9 @@ class Solution:
                 if node.right:
                     next_level.append(node.right)
             current = next_level
+            # 后续输出的放在起始位置 实现反序
             result.insert(0, vals)
+
         return result
 
 if __name__ == "__main__":

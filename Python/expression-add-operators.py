@@ -21,47 +21,43 @@ class Solution(object):
         :rtype: List[str]
         """
         result, expr = [], []
-        val, i = 0, 0
-        val_str = ""
-        while i < len(num):
-            val = val * 10 + ord(num[i]) - ord('0')
-            val_str += num[i]
-            # Avoid "00...".
-            if str(val) != val_str:
-                break
-            expr.append(val_str)
-            self.addOperatorsDFS(num, target, i + 1, 0, val, expr, result)
-            expr.pop()
-            i += 1
+        self.addOperatorsDFS(num, target, 0, 0, 0, expr, result)
         return result
 
-    def addOperatorsDFS(self, num, target, pos, operand1, operand2, expr, result):
-        if pos == len(num) and operand1 + operand2 == target:
-            result.append("".join(expr))
-        else:
-            val, i = 0, pos
-            val_str = ""
-            while i < len(num):
-                val = val * 10 + ord(num[i]) - ord('0')
-                val_str += num[i]
-                # Avoid "00...".
-                if str(val) != val_str:
-                    break
-    
-                # Case '+':
-                expr.append("+" + val_str)
-                self.addOperatorsDFS(num, target, i + 1, operand1 + operand2, val, expr, result)
-                expr.pop()
-    
+    def addOperatorsDFS(self, s, target, pos, operand1, operand2, expr, result):
+        if pos == len(s):
+            if operand1 + operand2 == target:
+                e = "".join(expr)
+                e = e[1:] if e[0] == '+' else e
+                result.append(e)
+            return
+
+        num, i = 0, pos
+        num_str = ""
+        while i < len(s):
+            num_str += s[i]
+            num = num * 10 + ord(s[i]) - ord('0')
+
+            # Case '+':
+            expr.append("+"), expr.append(num_str)
+            self.addOperatorsDFS(s, target, i + 1, operand1 + operand2, num, expr, result)
+            expr.pop(), expr.pop()
+
+            # '-' and '*' could be used only if the expression is not empty.
+            if expr:
                 # Case '-':
-                expr.append("-" + val_str)
-                self.addOperatorsDFS(num, target, i + 1, operand1 + operand2, -val, expr, result)
-                expr.pop()
+                expr.append("-"), expr.append(num_str)
+                self.addOperatorsDFS(s, target, i + 1, operand1 + operand2, -num, expr, result)
+                expr.pop(), expr.pop()
         
                 # Case '*':
-                expr.append("*" + val_str)
-                self.addOperatorsDFS(num, target, i + 1, operand1, operand2 * val, expr, result)
-                expr.pop()
-        
-                i += 1
+                expr.append("*"), expr.append(num_str)
+                self.addOperatorsDFS(s, target, i + 1, operand1, operand2 * num, expr, result)
+                expr.pop(), expr.pop()
+
+            # Char is '0'.
+            if num == 0:
+                break
+    
+            i += 1
   
